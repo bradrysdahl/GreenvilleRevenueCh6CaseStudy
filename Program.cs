@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Console;
 
-namespace GreenvilleRevenueCh6
+namespace GreenvilleCh7
 {
     class Program
     {
@@ -15,22 +15,54 @@ namespace GreenvilleRevenueCh6
             int contestantsThisYear;
             int contestantsLastYear;
             int expectedRevenue;
-            {
 
-            }
+            Write("Enter the number of contestants for this year: ");
+            contestantsThisYear = enterContestants();
 
-            Write("Enter the number of contestants this year between 0-30: ");
-            contestantsThisYear = Convert.ToInt32(ReadLine());
+            fillArrays(contestantsThisYear);
 
-            while (contestantsThisYear < 0 || contestantsThisYear > 30)
+            Write("Enter the number of contestants for last year: ");
+            contestantsLastYear = enterContestants();
+
+            expectedRevenue = contestantsThisYear * FEE;
+
+            WriteLine(expectedRevenue.ToString("C"));
+
+            displayMessage(contestantsThisYear, contestantsLastYear);
+        }
+
+        private static int enterContestants()
+        {
+            int numContestants;
+            numContestants = Convert.ToInt32(ReadLine());
+
+            while (numContestants < 0 || numContestants > 30)
             {
                 Write("That number is invalid. Please enter a number between 0-30: ");
-                contestantsThisYear = Convert.ToInt32(ReadLine());
+                numContestants = Convert.ToInt32(ReadLine());
+                return numContestants;
             }
+            return numContestants;
+        }
 
+        private static void displayMessage(int contestantsThisYear, int contestantsLastYear)
+        {
+            if (contestantsThisYear > (contestantsLastYear * 2))
+            {
+                WriteLine("The competition is more than twice as big this year! ");
+            }
+            else if ((contestantsThisYear <= (contestantsLastYear * 2)) && (contestantsThisYear > contestantsLastYear))
+            {
+                WriteLine("The competition is bigger than ever!");
+            }
+            else
+                WriteLine("A tighter race this year! Come out and cast your vote!");
+        }
+
+        private static void fillArrays(int contestantsThisYear)
+        {
             string[] contestants = new string[contestantsThisYear];
             string[] codes = new string[contestantsThisYear];
-            string codesFirst = "";
             int singCount = 0;
             int danceCount = 0;
             int magicCount = 0;
@@ -43,13 +75,7 @@ namespace GreenvilleRevenueCh6
                 Write("Enter the first name of contestant #{0}: ", x + 1);
                 contestants[x] = ReadLine();
                 Write("Enter the talent code for contestant #{0}: ", x + 1);
-                codesFirst = ReadLine();
-               // while (codesFirst != "S" || codesFirst != "s" || codesFirst != "D" || codesFirst != "d" || codesFirst != "M" || codesFirst != "m" || codesFirst != "O" || codesFirst != "o")
-               // {
-                  //  Write("That code is invalid. Please enter 'S' for singing, 'D' for dancing, 'M' for magic or 'O' for other: ");
-                   // codesFirst = ReadLine();
-                //}
-                codes[x] = codesFirst;
+                codes[x] = ReadLine();
             }
             WriteLine(contestants.Length);
 
@@ -59,15 +85,15 @@ namespace GreenvilleRevenueCh6
                 {
                     singCount++;
                 }
-                else if(codes[x] == "D" || codes[x] == "d")
+                else if (codes[x] == "D" || codes[x] == "d")
                 {
                     danceCount++;
                 }
-                else if(codes[x] == "M" || codes[x] == "m")
+                else if (codes[x] == "M" || codes[x] == "m")
                 {
                     magicCount++;
                 }
-                else if(codes[x] == "O" || codes[x] == "o")
+                else if (codes[x] == "O" || codes[x] == "o")
                 {
                     otherCount++;
                 }
@@ -78,27 +104,27 @@ namespace GreenvilleRevenueCh6
             WriteLine("Number contestants for magic is: {0}", magicCount);
             WriteLine("Number contestants for other is: {0}", otherCount);
 
-            while(sentinal != "X")
+            while (sentinal != "X")
             {
                 Write("Enter a talent code to display contestants for that group: ");
                 codeInquiry = ReadLine();
                 sentinal = codeInquiry;
-            
-                for(int x = 0; x < contestants.Length; x++)
+
+                for (int x = 0; x < contestants.Length; x++)
                 {
-                    if(codeInquiry == "S" || codeInquiry == "s" && codeInquiry == codes[x])
+                    if (codeInquiry == "S" || codeInquiry == "s" && codeInquiry == codes[x])
                     {
                         WriteLine("Singing contestant: {0}", contestants[x]);
                     }
-                    else if(codeInquiry == "D" || codeInquiry == "d" && codeInquiry == codes[x])
+                    else if (codeInquiry == "D" || codeInquiry == "d" && codeInquiry == codes[x])
                     {
                         WriteLine("Dancing contestant: {0}", contestants[x]);
                     }
-                    else if(codeInquiry == "M" || codeInquiry == "m" && codeInquiry == codes[x])
+                    else if (codeInquiry == "M" || codeInquiry == "m" && codeInquiry == codes[x])
                     {
                         WriteLine("Magic contestant: {0}", contestants[x]);
                     }
-                    else if(codeInquiry == "O" || codeInquiry == "o" && codeInquiry == codes[x])
+                    else if (codeInquiry == "O" || codeInquiry == "o" && codeInquiry == codes[x])
                     {
                         WriteLine("Other contestant: {0}", contestants[x]);
                     }
@@ -108,28 +134,6 @@ namespace GreenvilleRevenueCh6
                     }
                 }
             }
-                WriteLine("Enter the number of contestants from last year between 0-30: ");
-            contestantsLastYear = Convert.ToInt32(ReadLine());
-
-            while (contestantsLastYear < 0 || contestantsLastYear > 30)
-            {
-                WriteLine("That number is invalid. Please enter a number between 0-30: ");
-                contestantsLastYear = Convert.ToInt32(ReadLine());
-            }
-
-            expectedRevenue = contestantsThisYear * FEE;
-
-            WriteLine(expectedRevenue.ToString("C"));
-            if (contestantsThisYear > (contestantsLastYear * 2))
-            {
-                WriteLine("The competition is more than twice as big this year! ");
-            }
-            else if ((contestantsThisYear <= (contestantsLastYear * 2)) && (contestantsThisYear > contestantsLastYear))
-            {
-                WriteLine("The competition is bigger than ever!");
-            }
-            else
-                WriteLine("A tighter race this year! Come out and cast your vote!");
         }
     }
 }
